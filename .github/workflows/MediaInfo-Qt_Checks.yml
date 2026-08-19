@@ -76,6 +76,11 @@ jobs:
         run: |
           qmake.exe ${{ github.workspace }}\MediaInfo\Project\QMake\GUI\MediaInfoQt.pro -spec ${{ runner.arch == 'ARM64' && 'win32-arm64-msvc' || 'win32-msvc' }} "CONFIG+=qtquickcompiler"
           nmake.exe
+      - name: Upload MediaInfo.exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: MediaInfo-${{ matrix.architecture }}
+          path: MediaInfo.exe
 
   Ubuntu:
     strategy:
