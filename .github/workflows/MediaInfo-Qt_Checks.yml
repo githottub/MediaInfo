@@ -76,11 +76,21 @@ jobs:
         run: |
           qmake.exe ${{ github.workspace }}\MediaInfo\Project\QMake\GUI\MediaInfoQt.pro -spec ${{ runner.arch == 'ARM64' && 'win32-arm64-msvc' || 'win32-msvc' }} "CONFIG+=qtquickcompiler"
           nmake.exe
-      - name: Upload MediaInfo.exe
+      - name: Deploy Qt dependencies
+        shell: cmd
+        run: |
+          windeployqt.exe --no-quick-import --no-translations --no-system-d3d-compiler --no-system-dxc-compiler --no-compiler-runtime --no-opengl-sw ${{ matrix.architecture }}\MediaInfo.exe
+
+      - name: Verify executable
+        shell: cmd
+        run: |
+          if not exist ${{ matrix.architecture }}\MediaInfo.exe exit /b 1
+
+      - name: Upload MediaInfo
         uses: actions/upload-artifact@v4
         with:
           name: MediaInfo-${{ matrix.architecture }}
-          path: ${{ matrix.architecture }}\MediaInfo.exe
+          path: ${{ matrix.architecture }}
 
   Ubuntu:
     strategy:
