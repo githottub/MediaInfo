@@ -80,7 +80,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: MediaInfo-${{ matrix.architecture }}
-          path: MediaInfo.exe
+          path: ${{ matrix.architecture }}\MediaInfo.exe
 
   Ubuntu:
     strategy:
