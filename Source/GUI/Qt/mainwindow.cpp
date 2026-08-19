@@ -184,6 +184,11 @@ MainWindow::MainWindow(const QStringList& filesnames, int viewasked, QWidget *pa
     defaultSettings();
     applySettings();
 
+
+    // My Custom Addition: The next 2 lines always enable the Full Parsing option at startup
+    ui->actionFull_Parse->setChecked(true);
+    C->MI->Option_Static(__T("ParseSpeed"), __T("1"));
+
     if( (viewasked>=0) && (viewasked<NB_VIEW) )
         view=ViewMode(viewasked);
     else
